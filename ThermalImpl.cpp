@@ -31,7 +31,7 @@
 #include <fcntl.h>
 #include <unistd.h>
 #include <cstring>
-
+#include <cmath>
 
 #include <android-base/file.h>
 #include <android-base/logging.h>
@@ -39,6 +39,7 @@
 #include <android-base/stringprintf.h>
 #include <android-base/strings.h>
 #include <hidl/HidlTransportSupport.h>
+#include <cutils/properties.h>
 
 #include "ThermalImpl.h"
 #include "thermal_map_table_type.h"
@@ -78,11 +79,20 @@ ThermalImpl::ThermalImpl(const NotificationCallback &cb)
 }
 
 ThrottlingSeverity ThermalImpl::getSeverityFromThresholds(float value, TemperatureType_2_0 type) {
+	char prop_board_platform[PROPERTY_VALUE_MAX];
 	ThrottlingSeverity ret_hot = ThrottlingSeverity::NONE;
 	int typetoint = static_cast<int>(type);
 
 	if (typetoint < 0)
 		return ret_hot;
+
+	property_get("ro.board.platform", prop_board_platform, "");
+	if (!strcmp("rk3288", prop_board_platform)) {
+		kRockchipTempThreshold[0].hotThrottlingThresholds[3] = 80;
+		kRockchipTempThreshold[0].hotThrottlingThresholds[6] = 115;
+		kRockchipTempThreshold[1].hotThrottlingThresholds[3] = 80;
+		kRockchipTempThreshold[1].hotThrottlingThresholds[6] = NAN;
+	}
 
 	for (size_t i = static_cast<size_t>(ThrottlingSeverity::SHUTDOWN);
 		i > static_cast<size_t>(ThrottlingSeverity::NONE); --i) {

@@ -321,18 +321,18 @@ COOLING_DATA cdata[MAX_COOLING] = {
 		-1
 	},
 };
-const TemperatureThreshold kRockchipTempThreshold[TT_MAX] = {
+TemperatureThreshold kRockchipTempThreshold[TT_MAX] = {
 	{
 		.type = TemperatureType::CPU,
 		.name = CPU_TZ_NAME,
-		.hotThrottlingThresholds = {{NAN, NAN, NAN, 70, NAN, NAN, 115}},
+		.hotThrottlingThresholds = {{NAN, NAN, NAN, 85, NAN, NAN, 105}},
 		.coldThrottlingThresholds = {{NAN, NAN, NAN, NAN, NAN, NAN, NAN}},
 		.vrThrottlingThreshold = 70,
 	},
 	{
 		.type = TemperatureType::GPU,
 		.name = GPU_TZ_NAME,
-		.hotThrottlingThresholds = {{NAN, NAN, NAN, 70, NAN, NAN, 115}},
+		.hotThrottlingThresholds = {{NAN, NAN, NAN, 85, NAN, NAN, NAN}},
 		.coldThrottlingThresholds = {{NAN, NAN, NAN, NAN, NAN, NAN, NAN}},
 		.vrThrottlingThreshold = 70,
 	},
