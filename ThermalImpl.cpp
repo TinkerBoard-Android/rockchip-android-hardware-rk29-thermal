@@ -92,7 +92,12 @@ ThrottlingSeverity ThermalImpl::getSeverityFromThresholds(float value, Temperatu
 		kRockchipTempThreshold[0].hotThrottlingThresholds[6] = 115;
 		kRockchipTempThreshold[1].hotThrottlingThresholds[3] = 80;
 		kRockchipTempThreshold[1].hotThrottlingThresholds[6] = NAN;
-	}
+	} else if (!strcmp("rk356x", prop_board_platform)) {
+                kRockchipTempThreshold[0].hotThrottlingThresholds[3] = 85;
+                kRockchipTempThreshold[0].hotThrottlingThresholds[6] = 120;
+                kRockchipTempThreshold[1].hotThrottlingThresholds[3] = 80;
+                kRockchipTempThreshold[1].hotThrottlingThresholds[6] = NAN;
+        }
 
 	for (size_t i = static_cast<size_t>(ThrottlingSeverity::SHUTDOWN);
 		i > static_cast<size_t>(ThrottlingSeverity::NONE); --i) {
